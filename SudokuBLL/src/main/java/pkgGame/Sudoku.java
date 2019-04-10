@@ -3,6 +3,7 @@ package pkgGame;
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import pkgHelper.LatinSquare;
 
@@ -412,6 +413,27 @@ public class Sudoku extends LatinSquare {
 		}
 	}
 	
+	private java.util.HashSet<java.lang.Integer> getAllValidCellValues(int iCol, int iRow){
+		java.util.HashSet<java.lang.Integer> validValues=new java.util.HashSet<java.lang.Integer>();
+		int[] colVals=getColumn(iCol);
+		int[] rowVals=getRow(iRow);
+		int[] regVals=getRegion(iCol, iRow);
+		for (int val=0; val<=this.iSize; val++) {
+			validValues.add(val+1);
+		}
+		for (int val : colVals) {
+			validValues.remove(val);
+		}
+		for (int val : rowVals) {
+			validValues.remove(val);
+		}
+		for (int val : regVals) {
+			validValues.remove(val);
+		}
+		
+		return validValues;
+	}
+	
 	private class cell{
 		private int iCol;
 		private int iRow;
@@ -440,6 +462,10 @@ public class Sudoku extends LatinSquare {
 				arrList.add(value);
 			}
 			lstValidValues=arrList;
+		}
+		
+		public int hashCode() {
+			return Objects.hash(iRow,iCol);
 		}
 	}
 }

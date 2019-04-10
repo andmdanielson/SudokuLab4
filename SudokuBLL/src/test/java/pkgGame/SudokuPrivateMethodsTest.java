@@ -124,4 +124,33 @@ public class SudokuPrivateMethodsTest {
 		}
 
 	}
+	// Begin new tests Lab 4
+	@Test
+	public void  getAllValidCellValues_test() throws Exception{
+		System.out.println("Test for getAllValidCellValues()");
+		Sudoku puzzle = null;
+		java.util.HashSet<java.lang.Integer> values=new java.util.HashSet<java.lang.Integer>();
+		
+		Class<?> cls = Class.forName("pkgGame.Sudoku");
+		Constructor cons = cls.getConstructor(new Class[] {int.class});
+		cons.setAccessible(true);
+		
+		puzzle = (Sudoku) cons.newInstance(9);
+		
+		Method methodGetAllValidCellValues=cls.getDeclaredMethod("getAllValidCellValues", int.class,int.class);
+		methodGetAllValidCellValues.setAccessible(true);
+		int col=6;
+		int row=5;
+		values=(java.util.HashSet<java.lang.Integer>) methodGetAllValidCellValues.invoke(puzzle,col,row);
+		
+		puzzle.PrintPuzzle();
+		PrintStars();
+		
+		System.out.println("Possible values at column "+col+", row "+row);
+		for (java.lang.Integer val : values) {
+			System.out.println(val);
+		}
+		PrintStars();
+		
+	}
 }

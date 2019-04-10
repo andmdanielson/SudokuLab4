@@ -412,14 +412,21 @@ public class Sudoku extends LatinSquare {
 			ar[i] = a;
 		}
 	}
-	
+	// Begin new content for lab 4
 	private java.util.HashSet<java.lang.Integer> getAllValidCellValues(int iCol, int iRow){
 		java.util.HashSet<java.lang.Integer> validValues=new java.util.HashSet<java.lang.Integer>();
 		int[] colVals=getColumn(iCol);
 		int[] rowVals=getRow(iRow);
 		int[] regVals=getRegion(iCol, iRow);
-		for (int val=0; val<=this.iSize; val++) {
-			validValues.add(val+1);
+		
+		int check=colVals[iRow];
+		if (check!=0) {
+			validValues.add(check);
+			return validValues;
+		}
+		
+		for (int val=1; val<=this.iSize; val++) {
+			validValues.add(val);
 		}
 		for (int val : colVals) {
 			validValues.remove(val);

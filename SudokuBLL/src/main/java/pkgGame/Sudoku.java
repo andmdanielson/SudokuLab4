@@ -4,6 +4,9 @@ import java.security.SecureRandom;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.lang.Integer;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import pkgHelper.LatinSquare;
 
@@ -414,10 +417,10 @@ public class Sudoku extends LatinSquare {
 	}
 	// Begin new content for lab 4
 	
-	private java.util.HashMap<java.lang.Integer,Sudoku.cell> cells;
+	private HashMap<Integer,Sudoku.cell> cells;
 	
-	private java.util.HashSet<java.lang.Integer> getAllValidCellValues(int iCol, int iRow){
-		java.util.HashSet<java.lang.Integer> validValues=new java.util.HashSet<java.lang.Integer>();
+	private HashSet<Integer> getAllValidCellValues(int iCol, int iRow){
+		HashSet<Integer> validValues=new HashSet<Integer>();
 		int[] colVals=getColumn(iCol);
 		int[] rowVals=getRow(iRow);
 		int[] regVals=getRegion(iCol, iRow);
@@ -445,7 +448,7 @@ public class Sudoku extends LatinSquare {
 	private class cell{
 		private int iCol;
 		private int iRow;
-		private java.util.ArrayList<java.lang.Integer> lstValidValues;
+		private ArrayList<Integer> lstValidValues;
 		
 		public cell(int row, int col) {
 			iCol=col;
@@ -462,13 +465,13 @@ public class Sudoku extends LatinSquare {
 			return iRow;
 		}
 		
-		public java.util.ArrayList<java.lang.Integer> getLstValidValues(){
+		public ArrayList<Integer> getLstValidValues(){
 			return lstValidValues;
 		}
 		
-		public void setlstValidValues(java.util.HashSet<java.lang.Integer> valList) {
-			java.util.ArrayList<java.lang.Integer> arrList=new java.util.ArrayList<java.lang.Integer>();
-			for (java.lang.Integer value : valList) {
+		public void setlstValidValues(HashSet<Integer> valList) {
+			ArrayList<Integer> arrList=new ArrayList<Integer>();
+			for (Integer value : valList) {
 				arrList.add(value);
 			}
 			lstValidValues=arrList;

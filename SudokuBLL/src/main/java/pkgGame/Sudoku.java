@@ -413,6 +413,9 @@ public class Sudoku extends LatinSquare {
 		}
 	}
 	// Begin new content for lab 4
+	
+	private java.util.HashMap<java.lang.Integer,Sudoku.cell> cells;
+	
 	private java.util.HashSet<java.lang.Integer> getAllValidCellValues(int iCol, int iRow){
 		java.util.HashSet<java.lang.Integer> validValues=new java.util.HashSet<java.lang.Integer>();
 		int[] colVals=getColumn(iCol);
@@ -435,6 +438,10 @@ public class Sudoku extends LatinSquare {
 		return validValues;
 	}
 	
+	private boolean fillremaining(Sudoku.cell c) {
+		return true;
+	}
+	
 	private class cell{
 		private int iCol;
 		private int iRow;
@@ -443,6 +450,8 @@ public class Sudoku extends LatinSquare {
 		public cell(int row, int col) {
 			iCol=col;
 			iRow=row;
+			setlstValidValues(getAllValidCellValues(col,row));
+			
 		}
 		
 		public int getiCol() {
@@ -467,6 +476,19 @@ public class Sudoku extends LatinSquare {
 		
 		public int hashCode() {
 			return Objects.hash(iRow,iCol);
+		}
+		
+		public void ShuffleValidValues() {
+			int length=lstValidValues.size();
+			int[] values=new int[length];
+			for (int idx=0; idx<length; idx++) {
+				values[idx]=lstValidValues.get(idx);
+			}
+			shuffleArray(values);
+			lstValidValues.clear();
+			for (int idx=0; idx<length; idx++) {
+				lstValidValues.add(values[idx]);
+			}
 		}
 	}
 }

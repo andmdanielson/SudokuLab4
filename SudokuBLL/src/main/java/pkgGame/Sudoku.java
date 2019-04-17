@@ -441,6 +441,10 @@ public class Sudoku extends LatinSquare {
 		return validValues;
 	}
 	
+	private void setCells() {
+		
+	}
+	
 	private boolean fillremaining(Sudoku.cell c) {
 		return true;
 	}

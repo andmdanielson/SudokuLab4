@@ -419,12 +419,6 @@ public class Sudoku extends LatinSquare {
 		int[] rowVals=getRow(iRow);
 		int[] regVals=getRegion(iCol, iRow);
 		
-		int check=colVals[iRow];
-		if (check!=0) {
-			validValues.add(check);
-			return validValues;
-		}
-		
 		for (int val=1; val<=this.iSize; val++) {
 			validValues.add(val);
 		}

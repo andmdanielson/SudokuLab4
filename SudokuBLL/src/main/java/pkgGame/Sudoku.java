@@ -3,6 +3,7 @@ package pkgGame;
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 import java.lang.Integer;
 import java.util.HashMap;
@@ -67,6 +68,7 @@ public class Sudoku extends LatinSquare {
 		int[][] puzzle = new int[iSize][iSize];
 		super.setLatinSquare(puzzle);
 		FillDiagonalRegions();
+		SetCells();
 	}
 
 	/**
@@ -417,7 +419,7 @@ public class Sudoku extends LatinSquare {
 	}
 	// Begin new content for lab 4
 	
-	private HashMap<Integer,Sudoku.cell> cells;
+	private HashMap<Integer,Sudoku.Cell> cells;
 	
 	private HashSet<Integer> getAllValidCellValues(int iCol, int iRow){
 		HashSet<Integer> validValues=new HashSet<Integer>();
@@ -441,23 +443,45 @@ public class Sudoku extends LatinSquare {
 		return validValues;
 	}
 	
-	private void setCells() {
+	public boolean isValidValue(Sudoku.Cell c, int iValue) {
+		boolean match = false;
+		if(isValidValue(c.getiRow(),c.getiCol(),iValue)) {
+			match = true;
+		}
+		return match;
 		
 	}
 	
-	private boolean fillremaining(Sudoku.cell c) {
-		return true;
+	private void SetCells() {
+		for(int iRow = 0; iRow < iSize; iRow++) {
+			for(int iCol = 0; iCol < iSize; iCol++) {
+				Cell c = new Cell(iRow,iCol);
+				c.setlstValidValues(getAllValidCellValues(iRow,iCol));
+				c.ShuffleValidValues();
+			}
+		}
 	}
 	
-	private class cell{
+	private boolean fillRemaining(Cell c) {
+		for (int i = 0; i < c.getlstValidValues().size(); i++) {
+			if (isValidValue(c, c.getlstValidValues().get(i))) {
+				this.getPuzzle()[c.getiRow()][c.getiCol()] = c.getlstValidValues().get(i);
+				if (fillRemaining(c.GetNextCell(c))) {
+					return true;	
+				}
+			}
+		}
+		return false;
+	}
+	
+	private class Cell{
 		private int iCol;
 		private int iRow;
 		private ArrayList<Integer> lstValidValues;
 		
-		public cell(int row, int col) {
+		public Cell(int row, int col) {
 			iCol=col;
 			iRow=row;
-			setlstValidValues(getAllValidCellValues(col,row));
 			
 		}
 		
@@ -469,33 +493,64 @@ public class Sudoku extends LatinSquare {
 			return iRow;
 		}
 		
-		public ArrayList<Integer> getLstValidValues(){
+		public ArrayList<Integer> getlstValidValues(){
 			return lstValidValues;
 		}
 		
 		public void setlstValidValues(HashSet<Integer> valList) {
-			ArrayList<Integer> arrList=new ArrayList<Integer>();
-			for (Integer value : valList) {
-				arrList.add(value);
-			}
-			lstValidValues=arrList;
+//			ArrayList<Integer> arrList=new ArrayList<Integer>();
+//			for (Integer value : valList) {
+//				arrList.add(value);
+//			}
+//			lstValidValues=arrList;
+			lstValidValues=new ArrayList<Integer>(valList);
 		}
 		
 		public int hashCode() {
 			return Objects.hash(iRow,iCol);
 		}
 		
+//		public void ShuffleValidValues() {
+//			int length=lstValidValues.size();
+//			int[] values=new int[length];
+//			for (int idx=0; idx<length; idx++) {
+//				values[idx]=lstValidValues.get(idx);
+//			}
+//			shuffleArray(values);
+//			lstValidValues.clear();
+//			for (int idx=0; idx<length; idx++) {
+//				lstValidValues.add(values[idx]);
+//			}
+//		}
+		
+		public boolean equals(Object obj) {
+			boolean equiv = false;
+			if(obj == this)
+				equiv = true;
+			if (!(obj instanceof Cell))
+				equiv =  false;
+			Cell c1 = (Cell) obj;
+			if(this.getiRow() == c1.getiRow() && this.getiCol() == c1.getiCol())
+				equiv = true;
+			return equiv;
+		}
+		
+		public Cell GetNextCell(Cell current) {
+			int newRow = current.getiRow();
+			int newCol = current.getiCol();
+			if (current.getiCol() < iSize - 1) {
+				newCol++;
+			} else if (current.getiCol() == (iSize - 1) && current.getiRow() == (iSize - 1)) {
+				return null;
+			} else {
+				newRow++;
+				newCol = 0;
+			}
+			return new Cell(newRow, newCol);
+		}
+		
 		public void ShuffleValidValues() {
-			int length=lstValidValues.size();
-			int[] values=new int[length];
-			for (int idx=0; idx<length; idx++) {
-				values[idx]=lstValidValues.get(idx);
-			}
-			shuffleArray(values);
-			lstValidValues.clear();
-			for (int idx=0; idx<length; idx++) {
-				lstValidValues.add(values[idx]);
-			}
+			Collections.shuffle(getlstValidValues());
 		}
 	}
 }

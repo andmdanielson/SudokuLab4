@@ -122,6 +122,12 @@ public class SudokuTest {
 		}
 
 	}
+	// Begin new tests lab 4
+	@Test
+	public void SetCellsTest() throws Exception {
+		Sudoku puzzle = new Sudoku(9);
+		puzzle.getPuzzle()[0][3]=2;
+	}
 
 
 

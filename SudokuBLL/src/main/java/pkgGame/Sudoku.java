@@ -69,6 +69,8 @@ public class Sudoku extends LatinSquare {
 		super.setLatinSquare(puzzle);
 		FillDiagonalRegions();
 		SetCells();
+		this.PrintPuzzle();
+		fillRemaining(this.cells.get(Objects.hash(0,iSqrtSize)));
 	}
 
 	/**
@@ -419,7 +421,7 @@ public class Sudoku extends LatinSquare {
 	}
 	// Begin new content for lab 4
 	
-	private HashMap<Integer,Sudoku.Cell> cells;
+	private HashMap<Integer,Sudoku.Cell> cells=new HashMap<Integer,Sudoku.Cell>();
 	
 	private HashSet<Integer> getAllValidCellValues(int iCol, int iRow){
 		HashSet<Integer> validValues=new HashSet<Integer>();
@@ -458,17 +460,22 @@ public class Sudoku extends LatinSquare {
 				Cell c = new Cell(iRow,iCol);
 				c.setlstValidValues(getAllValidCellValues(iRow,iCol));
 				c.ShuffleValidValues();
+				cells.put(c.hashCode(),c);
 			}
 		}
 	}
 	
 	private boolean fillRemaining(Cell c) {
+		if (c==null) {
+			return true;
+		}
 		for (int i = 0; i < c.getlstValidValues().size(); i++) {
 			if (isValidValue(c, c.getlstValidValues().get(i))) {
 				this.getPuzzle()[c.getiRow()][c.getiCol()] = c.getlstValidValues().get(i);
 				if (fillRemaining(c.GetNextCell(c))) {
 					return true;	
 				}
+				
 			}
 		}
 		return false;
@@ -498,30 +505,13 @@ public class Sudoku extends LatinSquare {
 		}
 		
 		public void setlstValidValues(HashSet<Integer> valList) {
-//			ArrayList<Integer> arrList=new ArrayList<Integer>();
-//			for (Integer value : valList) {
-//				arrList.add(value);
-//			}
-//			lstValidValues=arrList;
 			lstValidValues=new ArrayList<Integer>(valList);
 		}
 		
 		public int hashCode() {
 			return Objects.hash(iRow,iCol);
 		}
-		
-//		public void ShuffleValidValues() {
-//			int length=lstValidValues.size();
-//			int[] values=new int[length];
-//			for (int idx=0; idx<length; idx++) {
-//				values[idx]=lstValidValues.get(idx);
-//			}
-//			shuffleArray(values);
-//			lstValidValues.clear();
-//			for (int idx=0; idx<length; idx++) {
-//				lstValidValues.add(values[idx]);
-//			}
-//		}
+	
 		
 		public boolean equals(Object obj) {
 			boolean equiv = false;
@@ -546,7 +536,10 @@ public class Sudoku extends LatinSquare {
 				newRow++;
 				newCol = 0;
 			}
-			return new Cell(newRow, newCol);
+			Cell next=new Cell(newRow,newCol);
+			int key=next.hashCode();
+			return(cells.get(key));
+			
 		}
 		
 		public void ShuffleValidValues() {

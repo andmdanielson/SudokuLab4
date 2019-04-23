@@ -3,9 +3,11 @@ package pkgGame;
 import static org.junit.Assert.*;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Objects;
 
 import org.junit.Test;
 
@@ -125,35 +127,7 @@ public class SudokuPrivateMethodsTest {
 
 	}
 	
-	@Test
-	public void GetNextCell_test_1() throws Exception {
-		Sudoku puzzle = null;
-		
-		Class<?> cls = Class.forName("pkgGame.Sudoku");
-		Constructor cons = cls.getConstructor(new Class[] {int.class});
-		cons.setAccessible(true);
-		
-		puzzle = (Sudoku) cons.newInstance(9);
-		
-		Method methodSetCells = cls.getDeclaredMethod("SetCells",null);
-		
-		/*
-		Method methodFillDiagReg = cls.getDeclaredMethod("FillDiagonalRegions",null);
-		methodFillDiagReg.setAccessible(true);
-		methodFillDiagReg.invoke(puzzle,null);
-		int[] values = {1,2,3,4,5,6,7,8,9};
-		int[] region0 = puzzle.getRegion(0);
-		int[] region4 = puzzle.getRegion(4);
-		int[] region8 = puzzle.getRegion(8);
-		puzzle.printPuzzle();
-		System.out.println("************");
-		assertTrue(puzzle.hasAllValues(region0,values));
-		assertTrue(puzzle.hasAllValues(region4, values));
-		assertTrue(puzzle.hasAllValues(region8, values));
-		assertFalse(puzzle.hasAllValues(puzzle.getRegion(3), values));
-		assertFalse(puzzle.hasAllValues(puzzle.getRegion(7),values));
-		*/
-	}
+	
 	
 	
 	

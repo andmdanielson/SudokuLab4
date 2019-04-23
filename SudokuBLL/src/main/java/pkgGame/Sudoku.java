@@ -473,9 +473,15 @@ public class Sudoku extends LatinSquare {
 	}
 	
 	private boolean fillRemaining(Cell c) {
+		
 		if (c == null) {
 			return true;
 		}
+		
+		if (c.getlstValidValues().size()==1) {
+			return fillRemaining(c.GetNextCell(c));
+		}
+		
 		System.out.println(c.getiRow()+","+c.getiCol());
 		System.out.println("There are " + c.getlstValidValues().size() + " valid values.");
 		for (int num: c.getlstValidValues()) {

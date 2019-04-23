@@ -428,6 +428,13 @@ public class Sudoku extends LatinSquare {
 		int[] colVals=getColumn(iCol);
 		int[] rowVals=getRow(iRow);
 		int[] regVals=getRegion(iCol, iRow);
+		/*
+		int check=this.getRow(iRow)[iCol];
+		if (check!=0) {
+			validValues.add(check);
+			return validValues;
+		}
+		*/
 		
 		for (int val=1; val<=this.iSize; val++) {
 			validValues.add(val);
@@ -458,7 +465,7 @@ public class Sudoku extends LatinSquare {
 		for(int iRow = 0; iRow < iSize; iRow++) {
 			for(int iCol = 0; iCol < iSize; iCol++) {
 				Cell c = new Cell(iRow,iCol);
-				c.setlstValidValues(getAllValidCellValues(iRow,iCol));
+				c.setlstValidValues(getAllValidCellValues(iCol,iRow));
 				c.ShuffleValidValues();
 				cells.put(c.hashCode(),c);
 			}
@@ -469,13 +476,14 @@ public class Sudoku extends LatinSquare {
 		if (c==null) {
 			return true;
 		}
-		for (int i = 0; i < c.getlstValidValues().size(); i++) {
-			if (isValidValue(c, c.getlstValidValues().get(i))) {
-				this.getPuzzle()[c.getiRow()][c.getiCol()] = c.getlstValidValues().get(i);
+		for (int val: c.getlstValidValues()) {
+			if (isValidValue(c, val)) {
+				this.getPuzzle()[c.getiRow()][c.getiCol()] = val;
+				System.out.println(c.getiRow() + "," + c.getiCol() + " = " + val);
 				if (fillRemaining(c.GetNextCell(c))) {
 					return true;	
 				}
-				
+				//this.getPuzzle()[c.getiRow()][c.getiCol()] = 0;
 			}
 		}
 		return false;

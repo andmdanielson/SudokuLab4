@@ -17,7 +17,7 @@ public class SudokuPrivateMethodsTest {
 		System.out.println();
 	}
 
-	@Test
+	//@Test
 	public void Sudoku_Test_SetRegion() {
 
 		Sudoku s1 = null;
@@ -76,7 +76,7 @@ public class SudokuPrivateMethodsTest {
 
 	}
 
-	@Test
+	//@Test
 	public void FillDiagonalRegions() {
 		
 		Sudoku s1 = null;
@@ -139,8 +139,8 @@ public class SudokuPrivateMethodsTest {
 		
 		Method methodGetAllValidCellValues=cls.getDeclaredMethod("getAllValidCellValues", int.class,int.class);
 		methodGetAllValidCellValues.setAccessible(true);
-		int col=6;
-		int row=5;
+		int col=4;
+		int row=4;
 		values=(java.util.HashSet<java.lang.Integer>) methodGetAllValidCellValues.invoke(puzzle,col,row);
 		
 		puzzle.PrintPuzzle();
@@ -153,5 +153,7 @@ public class SudokuPrivateMethodsTest {
 		PrintStars();
 		
 	}
+	
+	
 	
 }

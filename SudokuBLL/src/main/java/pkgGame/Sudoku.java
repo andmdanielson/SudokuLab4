@@ -428,13 +428,13 @@ public class Sudoku extends LatinSquare {
 		int[] colVals=getColumn(iCol);
 		int[] rowVals=getRow(iRow);
 		int[] regVals=getRegion(iCol, iRow);
-		/*
+		
 		int check=this.getRow(iRow)[iCol];
 		if (check!=0) {
 			validValues.add(check);
 			return validValues;
 		}
-		*/
+		
 		
 		for (int val=1; val<=this.iSize; val++) {
 			validValues.add(val);
@@ -473,21 +473,25 @@ public class Sudoku extends LatinSquare {
 	}
 	
 	private boolean fillRemaining(Cell c) {
-		if (c==null) {
+		if (c == null) {
 			return true;
 		}
-		for (int val: c.getlstValidValues()) {
-			if (isValidValue(c, val)) {
-				this.getPuzzle()[c.getiRow()][c.getiCol()] = val;
-				System.out.println(c.getiRow() + "," + c.getiCol() + " = " + val);
+		System.out.println(c.getiRow()+","+c.getiCol());
+		System.out.println("There are " + c.getlstValidValues().size() + " valid values.");
+		for (int num: c.getlstValidValues()) {
+			System.out.println("The value currently used is: " + num);
+			if (isValidValue(c, num)) {
+				this.getPuzzle()[c.getiRow()][c.getiCol()] = num;
+				
 				if (fillRemaining(c.GetNextCell(c))) {
 					return true;	
 				}
-				//this.getPuzzle()[c.getiRow()][c.getiCol()] = 0;
+				this.getPuzzle()[c.getiRow()][c.getiCol()] = 0;
 			}
 		}
 		return false;
 	}
+	
 	
 	private class Cell{
 		private int iCol;

@@ -69,8 +69,7 @@ public class Sudoku extends LatinSquare {
 		super.setLatinSquare(puzzle);
 		FillDiagonalRegions();
 		SetCells();
-		this.PrintPuzzle();
-		fillRemaining(this.cells.get(Objects.hash(0,iSqrtSize)));
+		fillRemaining(this.cells.get(Objects.hash(0,0)));
 	}
 
 	/**
@@ -429,6 +428,9 @@ public class Sudoku extends LatinSquare {
 		int[] rowVals=getRow(iRow);
 		int[] regVals=getRegion(iCol, iRow);
 		
+		//check if there is a value in the cell
+		//this is the case for the cells in the diagonal regions
+		//these values won't be changed in fillRemaining
 		int check=this.getRow(iRow)[iCol];
 		if (check!=0) {
 			validValues.add(check);
@@ -478,14 +480,16 @@ public class Sudoku extends LatinSquare {
 			return true;
 		}
 		
+		//for cells that already had a value in it (diagonal regions)
+		//will not change this value
 		if (c.getlstValidValues().size()==1) {
+			this.getPuzzle()[c.getiRow()][c.getiCol()] = c.getlstValidValues().get(0);
 			return fillRemaining(c.GetNextCell(c));
 		}
 		
-		System.out.println(c.getiRow()+","+c.getiCol());
-		System.out.println("There are " + c.getlstValidValues().size() + " valid values.");
+		
 		for (int num: c.getlstValidValues()) {
-			System.out.println("The value currently used is: " + num);
+			
 			if (isValidValue(c, num)) {
 				this.getPuzzle()[c.getiRow()][c.getiCol()] = num;
 				

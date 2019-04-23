@@ -16,7 +16,7 @@ public class SudokuTest {
 		System.out.println();
 	}
 
-	//@Test
+	@Test
 	public void Sudoku_Test1() {
 
 		try {
@@ -27,14 +27,14 @@ public class SudokuTest {
 
 	}
 
-	//@Test(expected = Exception.class)
+	@Test(expected = Exception.class)
 	public void Sudoku_Test2() throws Exception {
 
 		Sudoku s1 = new Sudoku(10);
 
 	}
 
-	//@Test
+	@Test
 	public void getRegion_Test1() {
 
 		int[][] puzzle = { { 1, 2, 3, 4 }, { 3, 4, 1, 2 }, { 2, 1, 4, 3 }, { 4, 3, 2, 1 } };
@@ -63,7 +63,7 @@ public class SudokuTest {
 
 	}
 
-	//@Test
+	@Test
 	public void getRegion_Test2() {
 
 		int[][] puzzle = { { 1, 2, 3, 4 }, { 3, 4, 1, 2 }, { 2, 1, 4, 3 }, { 4, 3, 2, 1 } };
@@ -91,7 +91,7 @@ public class SudokuTest {
 
 	}
 
-	//@Test
+	@Test
 	public void Sudoku_test1() {
 		int[][] puzzle = { { 5, 3, 4, 6, 7, 8, 9, 1, 2 }, { 6, 7, 2, 1, 9, 5, 3, 4, 8 }, { 1, 9, 8, 3, 4, 2, 5, 6, 7 },
 				{ 8, 5, 9, 7, 6, 1, 4, 2, 3 }, { 4, 2, 6, 8, 5, 3, 7, 9, 1 }, { 7, 1, 3, 9, 2, 4, 8, 5, 6 },
@@ -107,7 +107,7 @@ public class SudokuTest {
 
 	}
 
-	//@Test
+	@Test
 	public void Sudoku_test2() {
 		int[][] puzzle = { { 5, 5, 5, 6, 7, 8, 9, 1, 2 }, { 6, 7, 2, 1, 9, 5, 3, 4, 8 }, { 1, 9, 8, 3, 4, 2, 5, 6, 7 },
 				{ 8, 5, 9, 7, 6, 1, 4, 2, 3 }, { 4, 2, 6, 8, 5, 3, 7, 9, 1 }, { 7, 1, 3, 9, 2, 4, 8, 5, 6 },
@@ -124,9 +124,12 @@ public class SudokuTest {
 	}
 	// Begin new tests lab 4
 	@Test
-	public void SetCellsTest() throws Exception {
+	public void Sudoku_FullPuzzle_1() throws Exception {
 		Sudoku puzzle = new Sudoku(9);
+		PrintStars();
 		puzzle.PrintPuzzle();
+		PrintStars();
+		assertTrue(puzzle.isSudoku());
 	}
 
 

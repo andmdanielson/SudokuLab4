@@ -17,7 +17,7 @@ public class SudokuPrivateMethodsTest {
 		System.out.println();
 	}
 
-	//@Test
+	@Test
 	public void Sudoku_Test_SetRegion() {
 
 		Sudoku s1 = null;
@@ -76,7 +76,7 @@ public class SudokuPrivateMethodsTest {
 
 	}
 
-	//@Test
+	@Test
 	public void FillDiagonalRegions() {
 		
 		Sudoku s1 = null;
@@ -124,12 +124,10 @@ public class SudokuPrivateMethodsTest {
 		}
 
 	}
-	// Begin new tests Lab 4
+	
 	@Test
-	public void  getAllValidCellValues_test() throws Exception{
-		System.out.println("Test for getAllValidCellValues()");
+	public void GetNextCell_test_1() throws Exception {
 		Sudoku puzzle = null;
-		java.util.HashSet<java.lang.Integer> values=new java.util.HashSet<java.lang.Integer>();
 		
 		Class<?> cls = Class.forName("pkgGame.Sudoku");
 		Constructor cons = cls.getConstructor(new Class[] {int.class});
@@ -137,21 +135,24 @@ public class SudokuPrivateMethodsTest {
 		
 		puzzle = (Sudoku) cons.newInstance(9);
 		
-		Method methodGetAllValidCellValues=cls.getDeclaredMethod("getAllValidCellValues", int.class,int.class);
-		methodGetAllValidCellValues.setAccessible(true);
-		int col=4;
-		int row=4;
-		values=(java.util.HashSet<java.lang.Integer>) methodGetAllValidCellValues.invoke(puzzle,col,row);
+		Method methodSetCells = cls.getDeclaredMethod("SetCells",null);
 		
-		puzzle.PrintPuzzle();
-		PrintStars();
-		
-		System.out.println("Possible values at column "+col+", row "+row);
-		for (java.lang.Integer val : values) {
-			System.out.println(val);
-		}
-		PrintStars();
-		
+		/*
+		Method methodFillDiagReg = cls.getDeclaredMethod("FillDiagonalRegions",null);
+		methodFillDiagReg.setAccessible(true);
+		methodFillDiagReg.invoke(puzzle,null);
+		int[] values = {1,2,3,4,5,6,7,8,9};
+		int[] region0 = puzzle.getRegion(0);
+		int[] region4 = puzzle.getRegion(4);
+		int[] region8 = puzzle.getRegion(8);
+		puzzle.printPuzzle();
+		System.out.println("************");
+		assertTrue(puzzle.hasAllValues(region0,values));
+		assertTrue(puzzle.hasAllValues(region4, values));
+		assertTrue(puzzle.hasAllValues(region8, values));
+		assertFalse(puzzle.hasAllValues(puzzle.getRegion(3), values));
+		assertFalse(puzzle.hasAllValues(puzzle.getRegion(7),values));
+		*/
 	}
 	
 	
